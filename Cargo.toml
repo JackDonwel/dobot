@@ -1,0 +1,58 @@
+[package]
+name = "trading_bot"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.70"
+autobins = false
+
+[[bin]]
+name = "trading_bot"
+path = "src/main.rs"
+
+[features]
+ui = ["tauri", "tokio-tungstenite"]  # Removed serde_json from feature flags
+backtesting = ["dep:rand", "statrs"]  # Fixed syntax for optional dependencies
+
+[dependencies]
+# Core Engine
+tokio = { version = "1.32", features = ["full", "rt-multi-thread", "macros"] }
+crossbeam = "0.8.2"
+rayon = "1.8.0"
+
+# Exchange APIs
+ccxt-rs = "0.6.2"
+finnhub-rs = "0.1.5"
+bytes = "1.5.0"
+
+# UI Components (optional)
+tauri = { version = "1.5", optional = true, features = ["api-all"] }
+tokio-tungstenite = { version = "0.20", optional = true }
+
+# Math & Finance
+ndarray = "0.15.6"
+statrs = { version = "0.16.0", optional = true }  # Made optional
+rust_decimal = "1.32.0"
+ordered-float = "3.7.0"
+rand = { version = "0.8.5", optional = true }  # Added as optional dependency
+
+# Utilities
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"  # Always included
+thiserror = "1.0.50"
+chrono = { version = "0.4.31", features = ["serde"] }
+lazy_static = "1.4.0"
+log = "0.4.20"
+env_logger = "0.10.0"
+
+[build-dependencies]
+tauri-build = { version = "1.5", optional = true }
+
+[dev-dependencies]
+criterion = "0.5.1"
+mockall = "0.12.1"
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 3
+panic = "abort"
