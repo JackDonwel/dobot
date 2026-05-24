@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# TBot launcher — delegates to .venv entry point.
+set -euo pipefail
+
+APP_DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
+VENV="$APP_DIR/.venv"
+
+# ── Bootstrap ───────────────────────────────────────
+if [ ! -f "$VENV/bin/python" ]; then
+    echo "⟳ Creating virtual environment..."
+    python3 -m venv "$VENV"
+fi
+
+if [ ! -f "$VENV/.tbot_installed" ]; then
+    echo "⟳ Installing TBot package + dependencies..."
+    "$VENV/bin/pip" install --quiet -e "$APP_DIR" 2>&1 | tail -1
+    "$VENV/bin/pip" install --quiet yfinance fastapi uvicorn feedparser metaapi-cloud-sdk 2>&1 | tail -1
+    touch "$VENV/.tbot_installed"
+    echo "✓ TBot installed"
+fi
+
+mkdir -p "$APP_DIR/data"
+
+exec "$VENV/bin/tbot" "$@"

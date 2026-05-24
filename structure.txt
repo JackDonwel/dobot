@@ -1,0 +1,117 @@
+trading-system/
+├── ui/ (Electron/React Frontend)
+│   ├── public/
+│   │   └── index.html
+│   ├── src/
+│   │   ├── main/ (Electron Main Process)
+│   │   │   ├── main.js
+│   │   │   ├── preload.js
+│   │   │   └── setup-protocol.js
+│   │   ├── renderer/ (React Components)
+│   │   │   ├── App.jsx
+│   │   │   ├── components/
+│   │   │   │   ├── Dashboard.jsx
+│   │   │   │   ├── WinRateGauge.jsx
+│   │   │   │   ├── TradingTerminal.jsx
+│   │   │   │   ├── StrategyConfig.jsx
+│   │   │   │   └── PerformanceChart.jsx
+│   │   │   ├── store/ (Redux State)
+│   │   │   │   ├── actions.js
+│   │   │   │   ├── reducers.js
+│   │   │   │   └── store.js
+│   │   │   ├── services/ (API Communication)
+│   │   │   │   └── api.js
+│   │   │   ├── styles/ (CSS)
+│   │   │   │   ├── main.css
+│   │   │   │   ├── gauges.css
+│   │   │   │   ├── terminal.css
+│   │   │   │   └── debug.css
+│   │   │   └── index.js
+│   │   └── shared/
+│   │       └── constants.js
+│   ├── vite.config.js
+│   ├── electron-builder.json
+│   ├── .env
+│   └── package.json
+│
+
+===================================== 
+
+
+├── core-engine/ (Rust Core Engine)
+│   ├── src/
+│   │   ├── exchange_adapters.rs (C++ FFI Interface)
+│   │   ├── risk_firewall.rs
+│   │   ├── strategy_module.rs
+│   │   ├── position_manager.rs
+│   │   └── main.rs
+│   ├── Cargo.toml
+│   └── build.rs (C++ Build Script)
+│
+├── exchange-adapters/ (C++ Exchange Adapters)
+│   ├── include/
+│   │   └── exchange_adapter.h
+│   ├── src/
+│   │   ├── binance_adapter.cpp
+│   │   ├── kraken_adapter.cpp
+│   │   └── coinbase_adapter.cpp
+│   ├── CMakeLists.txt
+│   └── lib/ (Compiled Libraries)
+│
+├── strategy-module/ (Rust Strategy Engine)
+│   ├── src/
+│   │   ├── strategies/
+│   │   │   ├── rsi_macd.rs
+│   │   │   ├── bollinger_bands.rs
+│   │   │   └── machine_learning.rs
+│   │   └── lib.rs
+│   └── Cargo.toml
+│
+├── risk-firewall/ (Rust Risk Management)
+│   ├── src/
+│   │   ├── risk_rules.rs
+│   │   ├── position_sizing.rs
+│   │   └── lib.rs
+│   └── Cargo.toml
+│
+├── position-manager/ (Rust Position Management)
+│   ├── src/
+│   │   ├── portfolio.rs
+│   │   ├── trade_execution.rs
+│   │   └── lib.rs
+│   └── Cargo.toml
+│
+├── backtester/ (Python Backtester)
+│   ├── strategies/
+│   │   ├── __init__.py
+│   │   ├── rsi_macd.py
+│   │   └── bollinger.py
+│   ├── data_loader.py
+│   ├── backtest_engine.py
+│   ├── results_analyzer.py
+│   └── requirements.txt
+│
+├── api-gateway/ (Integration Layer)
+│   ├── src/
+│   │   ├── main.rs
+│   │   ├── routes/
+│   │   │   ├── trading.rs
+│   │   │   ├── market_data.rs
+│   │   │   └── backtest.rs
+│   │   └── services/
+│   │       ├── core_connector.rs
+│   │       └── exchange_service.rs
+│   ├── Cargo.toml
+│   └── Dockerfile
+│
+├── configs/ (Configuration Files)
+│   ├── trading-config.json
+│   ├── risk-rules.yaml
+│   └── exchange-credentials.enc
+│
+├── scripts/ (Utility Scripts)
+│   ├── build.sh
+│   ├── deploy.sh
+│   └── start-trading.sh
+│
+└── docker-compose.yml (Container Orchestration)
